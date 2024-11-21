@@ -1,0 +1,71 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[project]
+authors = [{ name = "Vathys00", email = "deepdesai00@gmail.com" }]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Programming Language :: Python",
+]
+dependencies = [
+    "Whoosh",
+    "fastapi",
+    "fs",
+    "networkx",
+    "pandoc",
+    "pydantic",
+    "uvicorn[standard]",
+]
+description = 'A full-stack application that allows for building complex networks of notes and pages.'
+dynamic = ["version"]
+keywords = []
+license = "MIT"
+name = "sarjan"
+readme = "README.md"
+requires-python = ">=3.8"
+
+[project.urls]
+Documentation = "https://github.com/Vathys00/sarjan#readme"
+Issues = "https://github.com/Vathys00/sarjan/issues"
+Source = "https://github.com/Vathys00/sarjan"
+
+[tool.hatch.version]
+path = "src/sarjan/__init__.py"
+source = "code"
+
+[tool.hatch.envs.default.scripts]
+start = "uvicorn sarjan.main:app"
+
+[tool.hatch.envs.dev]
+dependencies = ["black", "flake8", "isort"]
+optional-dependencies = ["httpx", "jupyterlab"]
+
+[tool.hatch.envs.dev.scripts]
+debug = "uvicorn sarjan.main:app --reload"
+format = "python -m black && python -m isort && python -m flake8"
+
+[tool.hatch.envs.types]
+extra-dependencies = ["mypy>=1.0.0"]
+
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/sarjan tests}"
+
+[tool.coverage.run]
+branch = true
+parallel = true
+source_pkgs = ["sarjan", "tests"]
+
+[tool.coverage.paths]
+sarjan = ["*/sarjan/src/sarjan", "src/sarjan"]
+tests = ["*/sarjan/tests", "tests"]
+
+[tool.coverage.report]
+exclude_lines = ["if TYPE_CHECKING:", "if __name__ == .__main__.:", "no cov"]

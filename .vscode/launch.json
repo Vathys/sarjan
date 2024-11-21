@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "type": "debugpy",
+      "name": "Sarjan Server",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["sarjan.app:app", "--reload"]
+    }
+  ]
+}
